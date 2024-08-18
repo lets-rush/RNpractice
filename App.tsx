@@ -1,118 +1,73 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from "react";
+import { Button, StyleSheet, TextInput } from "react-native";
+import { First } from '../RNpractice/src/components/First/First';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+interface State {
+  textInputValue: string
+  passwordInputValue: string
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+interface Props {
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
 }
+
+
+enum InputType {
+  EMAIL = 'Email',
+  PASSWORD = 'Password'
+}
+class App extends React.Component<Props, State> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      textInputValue: "",
+      passwordInputValue: "",
+    }
+  }
+
+  updateTextInput = (val, type) => {
+    switch (type) {
+      case InputType.EMAIL: {
+        this.setState({ textInputValue: val })
+      }
+        break;
+      case InputType.PASSWORD: {
+        this.setState({ passwordInputValue: val })
+      }
+        break;
+    }
+  }
+
+  handleLogin() {
+
+  }
+
+  // thees functions below could be replaced by a switchCase function above
+  // updateTextINputVallue = val => {
+  //   this.setState({ textInputValue: val })
+  // }
+  // updatePasswordINputVallue = val => {
+  //   this.setState({ passwordInputValue: val })
+  // }
+
+  render() {
+    return (
+      <First containerStyles={{ justifyContent: 'center' }}>
+        <TextInput onChangeText={val => this.updateTextInput(val, InputType.EMAIL)} style={styles.flexView} placeholder={"Email"} value={this.state.textInputValue} />
+        <TextInput onChangeText={val => this.updateTextInput(val, InputType.PASSWORD)} style={styles.flexView} placeholder={"Password"} value={this.state.passwordInputValue} />
+        <Button title="Login" onPress={this.handleLogin} />
+      </First>
+
+    )
+  }
+}
+
+
+export default App
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+  container: { flex: 1, backgroundColor: 'white', justifyContent: 'center' },
+  flexView: { alignSelf: 'center', borderWidth: 2, width: 100, marginVertical: 10 },
+})

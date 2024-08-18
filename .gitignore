@@ -1,6 +1,7 @@
 # React Native
 node_modules/
 npm-debug.log
+.yarn
 yarn-error.log
 .expo/
 .vscode/
