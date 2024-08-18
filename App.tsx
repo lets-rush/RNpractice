@@ -5,7 +5,7 @@ import { First } from '../RNpractice/src/components/First/First';
 
 interface State {
   textInputValue: string
-  passwordInputValue: string
+  passwordInputValue: string,
 }
 
 interface Props {
