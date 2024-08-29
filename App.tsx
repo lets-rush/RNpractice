@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, StyleSheet, TextInput } from "react-native";
 import { First } from '../RNpractice/src/components/First/First';
+import CustomButton from '../RNpractice/src/components/CustomButton/CustomButton';
 
 
 interface State {
@@ -18,7 +19,7 @@ enum InputType {
   PASSWORD = 'Password'
 }
 class App extends React.Component<Props, State> {
-
+  private passwordInputRef
   constructor(props) {
     super(props);
     this.state = {
@@ -55,9 +56,10 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <First containerStyles={{ justifyContent: 'center' }}>
-        <TextInput onChangeText={val => this.updateTextInput(val, InputType.EMAIL)} style={styles.flexView} placeholder={"Email"} value={this.state.textInputValue} />
-        <TextInput onChangeText={val => this.updateTextInput(val, InputType.PASSWORD)} style={styles.flexView} placeholder={"Password"} value={this.state.passwordInputValue} />
-        <Button title="Login" onPress={this.handleLogin} />
+        <TextInput onSubmitEditing={() => this.passwordInputRef.onFocus()} onChangeText={val => this.updateTextInput(val, InputType.EMAIL)} style={styles.flexView} placeholder={"Email"} value={this.state.textInputValue} />
+        <TextInput ref={ref => this.passwordInputRef = ref} onSubmitEditing={this.handleLogin} onChangeText={val => this.updateTextInput(val, InputType.PASSWORD)} style={styles.flexView} placeholder={"Password"} value={this.state.passwordInputValue} />
+        {/* <Button title="Login" onPress={this.handleLogin} /> */}
+        <CustomButton title="Login" onPress={this.handleLogin} />
       </First>
 
     )
